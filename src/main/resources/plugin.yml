@@ -1,0 +1,10 @@
+name: Evelyn
+version: 1.0.0
+main: net.tmxx.evelyn.Evelyn
+authors: [tmxx]
+descrption: Chatter bot for minecraft servers.
+
+commands:
+  evelyn:
+    usage: /<command> [message]
+    descrption: Talk to the evelyn bot.
