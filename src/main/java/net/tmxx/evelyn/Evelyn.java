@@ -48,7 +48,7 @@ public class Evelyn extends JavaPlugin {
     /**
      * Map of all player uuids and their connection to evelyn.
      */
-    @Getter private Map<UUID, ChatterBotSession> connections = new ConcurrentHashMap<>();
+    @Getter private Map< UUID, ChatterBotSession > connections = new ConcurrentHashMap<>();
 
     /**
      * The main config of this plugin.
@@ -131,14 +131,16 @@ public class Evelyn extends JavaPlugin {
     public void createSession( Player player ) {
         if ( this.online ) {
             this.getLogger().info( "Creating session for user " + player.getName() + ":" + player.getUniqueId() );
-            Bukkit.getScheduler().runTaskAsynchronously( this, new Runnable() {
-                @Override
-                public void run() {
-                    connections.put( player.getUniqueId(),
-                            chatterBot.createSession(
-                                    mainConfig.getLocales().toArray( new Locale[ mainConfig.getLocales().size() ] ) ) );
-                }
-            } );
+            try {
+                connections.put( player.getUniqueId(),
+                        chatterBot.createSession(
+                                mainConfig.getLocales().toArray( new Locale[ mainConfig.getLocales().size() ] ) ) );
+                online = true;
+                this.getLogger().info( "Session created for user " + player.getName() + ":" + player.getUniqueId() );
+            } catch ( Exception e ) {
+                online = false;
+                this.getLogger().warning( "Could not create session for user " + player.getName() + ":" + player.getUniqueId() );
+            }
         }
     }
 }

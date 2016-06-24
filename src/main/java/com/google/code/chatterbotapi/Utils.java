@@ -27,7 +27,6 @@ import java.util.Map;
 /*
     chatter-bot-api
     Copyright (C) 2011 pierredavidbelanger@gmail.com
-
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -49,8 +48,8 @@ public class Utils {
             }
 
             stringBuilder.append( URLEncoder.encode( parameter.getKey(), "UTF-8" ) )
-                .append( "=" )
-                .append( URLEncoder.encode( parameter.getValue(), "UTF-8" ) );
+                    .append( "=" )
+                    .append( URLEncoder.encode( parameter.getValue(), "UTF-8" ) );
         }
 
         return stringBuilder.toString();

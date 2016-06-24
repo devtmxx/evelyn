@@ -19,6 +19,7 @@ package net.tmxx.evelyn.listener;
 
 import lombok.RequiredArgsConstructor;
 import net.tmxx.evelyn.Evelyn;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,10 +48,15 @@ public class PlayerJoinListener implements Listener {
      */
     @EventHandler( ignoreCancelled = true )
     public void onPlayerJoin( PlayerJoinEvent event ) {
-        this.evelyn.createSession( event.getPlayer() );
+        Bukkit.getScheduler().runTaskAsynchronously( this.evelyn, new Runnable() {
+            @Override
+            public void run() {
+                evelyn.createSession( event.getPlayer() );
 
-        if ( event.getPlayer().hasPermission( "evelyn.info.availability" ) && !this.evelyn.isOnline() ) {
-            event.getPlayer().sendMessage( ChatColor.translateAlternateColorCodes( '&', this.evelyn.getMessageConfig().getEvelynIsOffline() ) );
-        }
+                if ( event.getPlayer().hasPermission( "evelyn.info.availability" ) && !evelyn.isOnline() ) {
+                    event.getPlayer().sendMessage( ChatColor.translateAlternateColorCodes( '&', evelyn.getMessageConfig().getEvelynIsOffline() ) );
+                }
+            }
+        } );
     }
 }
